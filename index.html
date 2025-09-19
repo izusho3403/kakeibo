@@ -1,27 +1,30 @@
-<canvas id="myChart"></canvas>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-fetch("【GASのURL】")
-  .then(res => res.json())
-  .then(rows => {
-    // rows は [ [日付, 項目, 金額, 種別], ... ] の配列
-    const labels = [];
-    const values = [];
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>家計簿アプリ</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <h1>家計簿アプリ</h1>
 
-    rows.slice(1).forEach(r => {
-      labels.push(r[1]);   // 項目
-      values.push(r[2]);   // 金額
-    });
+  <!-- 入力フォーム -->
+  <form id="kakeiboForm">
+    <input type="date" id="date" required>
+    <input type="text" id="item" placeholder="項目" required>
+    <input type="number" id="amount" placeholder="金額" required>
+    <select id="type">
+      <option value="収入">収入</option>
+      <option value="支出">支出</option>
+    </select>
+    <button type="submit">保存</button>
+  </form>
 
-    new Chart(document.getElementById("myChart"), {
-      type: 'pie',
-      data: {
-        labels: labels,
-        datasets: [{
-          data: values
-        }]
-      }
-    });
-  });
-</script>
+  <!-- 円グラフ -->
+  <canvas id="pieChart"></canvas>
 
+  <script src="script.js"></script>
+</body>
+</html>
